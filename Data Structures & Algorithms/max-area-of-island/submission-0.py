@@ -1,0 +1,40 @@
+class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+
+        m = len(grid)
+        n = len(grid[0])
+        land_point = []
+        d = [(0,1),(1,0),(-1,0),(0,-1)]
+        visted = [[0 for i in range(n)] for j in range(m)]
+        # print(visted)
+        que = deque()
+        
+        max_area = 0
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 1:
+                    # print(visted,"visit")
+                    # print(grid,"grid")
+                    if visted[i][j] == 1:
+                            continue
+                    visted[i][j] = 1
+                    k = 1
+                    # print(num,"num")
+                    que.append((i,j))
+
+                    while len(que)!=0:
+                        i,j = que.popleft()
+
+                        for x,y in d:
+                            (new_i,new_j) = (i+x,j+y)
+
+                            if new_i<0 or new_i>=m or new_j<0 or new_j>=n:
+                                continue
+                            if grid[new_i][new_j] == 1 and visted[new_i][new_j] == 0:
+                                visted[new_i][new_j] = 1
+                                que.append((new_i,new_j))
+                                k = k+1
+                                # print(new_i,new_j,"new")
+                    max_area = max(k,max_area)
+        return max_area
+        
